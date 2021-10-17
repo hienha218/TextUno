@@ -125,7 +125,7 @@ public class FullDeck {
 	
 	/**
 	 * Puts a card back into the deck
-	 * More specifically, the card will be put at the other end of the deck (front)
+	 * More specifically, the card will be put at the other end of the deck (bottom)
 	 */
 	public void putBack(Card card) {
 		size = size + 1;
@@ -137,7 +137,7 @@ public class FullDeck {
 	
 	/** 
 	 * Confirms if the deck is out of cards
-	 * @return true if the size is 0, false if there are cards in the array
+	 * @return true if the size is 0, false if there are cards in the deck
 	 */
 	public boolean isEmpty() {
 		if (size == 0) {
