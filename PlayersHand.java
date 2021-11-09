@@ -167,7 +167,7 @@ public class PlayersHand {
 			System.out.println("This hand is currently empty!");
 		}
 		for (int i = 0; i < size; i++) {
-			System.out.println(name);
+			System.out.println("| " + name);
 			node = node.getNext();
 			name = node.getElement();
 		}
