@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
  * There are only 2 players: the user and BOT in this game.
  * 
  * @author Hien Ha
- * @version 12.0.2
+ * @version 12.0.3
  * @since 1.0
  */
 
@@ -38,8 +38,8 @@ public class Gameplay {
 		 		 */
 		 		else if (inStr.compareTo("start") == 0) {
 		 			play = true;
-		 			FullDeck fulldeck = new FullDeck(); // use this to play the game with all 100 cards
-		 			//MiniDeck fulldeck = new MiniDeck(); // use this smaller deck (24 cards) to test the results faster
+		 			//FullDeck fulldeck = new FullDeck(); // uncomment this to play the game with all 100 cards
+		 			MiniDeck fulldeck = new MiniDeck(); // uncomment this smaller deck (24 cards) to test the results faster
 		 			fulldeck.shuffle();
 		 			PlayersHand pHand = new PlayersHand(); // player's hand
 		 			PlayersHand bHand = new PlayersHand(); // BOT's hand
@@ -71,15 +71,19 @@ public class Gameplay {
 		 				 * If it's false, the player cannot play
 		 				 */
 		 				while (pturn) {
+							System.out.println(" ");
 		 					System.out.println("BOT is having " + bHand.checkSize() + " cards.");
 			 				System.out.println("You are having " + pHand.checkSize() + " cards.");
-			 				System.out.println("You are having: ");
+							System.out.println("--------------------");
+			 				System.out.println("|  You are having");
 			 				pHand.displayHand();
-			 				System.out.println("Most recent played card is " + playedDeck.first());
+							System.out.println("--------------------");
+			 				System.out.println("Most recently played card is " + playedDeck.first());
+							System.out.println(" ");
 			 				System.out.println("To play a card, type 'play [cardname]'");
 			 				System.out.println("To get a card, type 'get cards'");
 			 				System.out.println("To quit, type 'quit game'");
-			 				System.out.print("What do you want to do? Type here > ");
+			 				System.out.print("What do you want to do? Type here >>>> ");
 			 				String newcmd = scanner.nextLine();
 			 				StringTokenizer fcmd = new StringTokenizer(newcmd);
 			 				// separate the input into 2 parts: command + card's name
@@ -129,7 +133,7 @@ public class Gameplay {
 			 											Card e = fulldeck.deal();
 			 											bHand.addFirst(e);
 			 										}
-			 										System.out.println("There are no cards left");
+			 										System.out.println("There are no cards left to draw");
 			 									}
 			 								}
 			 								ask = true;
@@ -141,18 +145,30 @@ public class Gameplay {
 			 									String color = scanner.nextLine();
 				 								if (color.compareTo("red") == 0 || color.compareTo("Red") == 0) {
 				 									chosen.changeColor("red");
+													System.out.println("-------------------------------------");
+													System.out.println("| The color has been changed to RED |");
+													System.out.println("-------------------------------------");
 				 									ask = false;
 				 								}
 				 								else if (color.compareTo("blue") == 0 || color.compareTo("Blue") == 0) {
 				 									chosen.changeColor("blue");
+													System.out.println("--------------------------------------");
+													System.out.println("| The color has been changed to BLUE |");
+													System.out.println("--------------------------------------");
 				 									ask = false;
 				 								}
 				 								else if (color.compareTo("green") == 0 || color.compareTo("Green") == 0) {
 				 									chosen.changeColor("green");
+													System.out.println("---------------------------------------");
+													System.out.println("| The color has been changed to GREEN |");
+													System.out.println("---------------------------------------");
 				 									ask = false;
 				 								}
 				 								else if (color.compareTo("yellow") == 0 || color.compareTo("Yellow") == 0) {
 				 									chosen.changeColor("yellow");
+													System.out.println("----------------------------------------");
+													System.out.println("| The color has been changed to YELLOW |");
+													System.out.println("----------------------------------------");
 				 									ask = false;
 				 								}
 				 								// keeps asking until a valid color is put in
@@ -170,7 +186,7 @@ public class Gameplay {
 			 							else if (chosen.isSkip()) {
 			 								pturn = true;
 			 								bturn = false;
-			 								System.out.println("BOT just lost their turn!");
+			 								System.out.println("> BOT just lost their turn!");
 			 								break;
 			 							}
 			 							
@@ -233,7 +249,7 @@ public class Gameplay {
 				 							pturn = true;
 				 							bturn = false;
 				 							// if the player's hand does not have any playable card, the game ends
-				 							if (pHand.probe(playedDeck.first()) == null && fulldeck.isEmpty()) {
+				 							if (pHand.probe(playedDeck.first()) == null) {
 				 			 					System.out.println("You are out of move!");
 				 			 					pturn = false;
 				 			 					bturn = false;
@@ -253,7 +269,7 @@ public class Gameplay {
 				 					// asking for the player's decision when having a playable card
 				 					while (ask) {
 				 						System.out.println("You are holding a playable card " + icard);
-				 						System.out.print("Type Y to play, type N to hold that card > ");
+				 						System.out.print("Type Y to play, type N to hold that card >>>> ");
 				 						String choice = scanner.nextLine();
 				 						// if Y/y, starts the player's turn again to let them choose/play the card
 				 						if (choice.compareTo("Y") == 0 || choice.compareTo("y") == 0) {
@@ -294,7 +310,7 @@ public class Gameplay {
 		 					if (bcard != null) {
 		 						bHand.playCard(playedDeck.first(), bcard);
 		 						playedDeck.addFirst(bcard);
-		 						System.out.println("BOT just played " + bcard);
+		 						System.out.println("> BOT just played " + bcard);
 		 						
 		 						/**
 		 						 * If BOT plays a Wild card, the mode color in its hand is chose as the new color
@@ -324,19 +340,27 @@ public class Gameplay {
 		 							}
 		 							if (red >= blue && red >= green && red >= yellow) {
 		 								bcard.changeColor("red");
-		 								System.out.println("BOT just changed the color to RED");
+										System.out.println("-------------------------------------");
+										System.out.println("| The color has been changed to RED |");
+										System.out.println("-------------------------------------");
 		 							}
 		 							else if (blue >= red && blue >= green && blue >= yellow) {
 		 								bcard.changeColor("blue");
-		 								System.out.println("BOT just changed the color to BLUE");
+		 								System.out.println("--------------------------------------");
+										System.out.println("| The color has been changed to BLUE |");
+										System.out.println("--------------------------------------");
 		 							}
 		 							else if (green >= red && green >= blue && green >= yellow) {
 		 								bcard.changeColor("green");
-		 								System.out.println("BOT just changed the color to GREEN");
+		 								System.out.println("---------------------------------------");
+										System.out.println("| The color has been changed to GREEN |");
+										System.out.println("---------------------------------------");
 		 							}
 		 							else if (yellow >= red && yellow >= blue && yellow >= green) {
 		 								bcard.changeColor("yellow");
-		 								System.out.println("BOT just changed the color to YELLOW");
+		 								System.out.println("----------------------------------------");
+										System.out.println("| The color has been changed to YELLOW |");
+										System.out.println("----------------------------------------");
 		 							}
 		 							// if it is a Draw 4 Wild card, the player has to take in 4 cards
 		 							if (bcard.isPlus4()) {
@@ -436,7 +460,7 @@ public class Gameplay {
 		 				 * The BOT wins when its hand is empty first
 		 				 */
 		 				else if (bHand.checkSize() == 0) {
-		 					System.out.println("UNO :( You lose!");
+		 					System.out.println("> BOT said UNO :( You lose!");
 		 					pturn = false;
 		 					bturn = false;
 		 					play = false;
@@ -456,7 +480,7 @@ public class Gameplay {
 		 				 * BOT is out of move if the undealt deck is empty and its hand has no playable card
 		 				 */
 		 				else if (bHand.probe(playedDeck.first()) == null && fulldeck.isEmpty()) {
-		 					System.out.println("BOT is out of move!");
+		 					System.out.println("> BOT is out of move!");
 		 					pturn = false;
 		 					bturn = false;
 		 					play = false;
